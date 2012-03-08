@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#_*_ coding: UTF-8 _*_
+#-*- coding: UTF-8 -*-
 '''
 python UDP ping tool by Chris <nodexy@gmail>
 USAGE:
@@ -58,7 +58,7 @@ for x in range(1,n+1):
 		recv_n += 1
 		tt.append(t1)
 	except socket.error, msg:
-		print 'except : ', msg, ' time=%dms ' % (len(d),time.time()-t)
+		print 'Recvfrom except : ', msg, ' time=%dms ' % (time.time()-t0)
 		lost_n += 1
 
 	time.sleep(0.5)
@@ -67,7 +67,10 @@ print ''
 print 'Ping statistics for ' ,remote_host,':'
 print '\tPackes: Sent = %d, Received = %d,  Lost = %d (%d%% loss)  ,' % (send_n,recv_n,lost_n,lost_n*100/send_n)
 print 'Approximate round trip times in milli-seconds:'
-print '\tMinimum = %dms, Maximum = %dms, Average = %dms' % (min(tt),max(tt),sum(tt)/len(tt))
+if tt:
+	print '\tMinimum = %dms, Maximum = %dms, Average = %dms' % (min(tt),max(tt),sum(tt)/len(tt))
+else:
+	print '\tNone.'
 print ''
 
 # END 
