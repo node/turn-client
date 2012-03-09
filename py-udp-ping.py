@@ -46,11 +46,12 @@ lost_n = 0
 tt = []
 
 for x in range(1,n+1):
-	n = sock.sendto(data,remote_host)
-	print 'Ping %d bytes=%d ; ' % (x,n) ,
-	send_n += 1
-	
+	t0 = time.time()
 	try:
+		n = sock.sendto(data,remote_host)
+		print 'Ping %d bytes=%d ; ' % (x,n) ,
+		send_n += 1
+	
 		t0 = time.time()
 		d,addr = sock.recvfrom(1024)
 		t1 = time.time()-t0
@@ -65,7 +66,10 @@ for x in range(1,n+1):
 
 print ''
 print 'Ping statistics for ' ,remote_host,':'
-print '\tPackes: Sent = %d, Received = %d,  Lost = %d (%d%% loss)  ,' % (send_n,recv_n,lost_n,lost_n*100/send_n)
+if send_n>0:
+	print '\tPackes: Sent = %d, Received = %d,  Lost = %d (%d%% loss)  ,' % (send_n,recv_n,lost_n,lost_n*100/send_n)
+else:
+	print 'None.'
 print 'Approximate round trip times in milli-seconds:'
 if tt:
 	print '\tMinimum = %dms, Maximum = %dms, Average = %dms' % (min(tt),max(tt),sum(tt)/len(tt))
